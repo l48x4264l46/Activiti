@@ -1,9 +1,9 @@
 /* Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -301,13 +301,13 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter implements Form
     } else {
       JsonNode formReferenceNode = getProperty(PROPERTY_FORM_REFERENCE, elementNode);
       if (formReferenceNode != null && formReferenceNode.get("id") != null) {
-        
+
         if (formMap != null && formMap.containsKey(formReferenceNode.get("id").asText())) {
           task.setFormKey(formMap.get(formReferenceNode.get("id").asText()));
         }
       }
     }
-    
+
     task.setDueDate(getPropertyValueAsString(PROPERTY_USERTASK_DUEDATE, elementNode));
     task.setCategory(getPropertyValueAsString(PROPERTY_USERTASK_CATEGORY, elementNode));
 
@@ -320,8 +320,12 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter implements Form
         JsonNode canCompleteTaskNode = assignmentDefNode.get("initiatorCanCompleteTask");
         if (typeNode == null || "static".equalsIgnoreCase(typeNode.asText())) {
           JsonNode assigneeNode = assignmentDefNode.get(PROPERTY_USERTASK_ASSIGNEE);
+          JsonNode assigneeNodeType = assignmentDefNode.get(PROPERTY_USERTASK_ASSIGNEE_TYPE);
           if (assigneeNode != null && assigneeNode.isNull() == false) {
             task.setAssignee(assigneeNode.asText());
+          }
+          if (assigneeNodeType != null && assigneeNodeType.isNull() == false) {
+            task.setAssigneeType(assigneeNodeType.asText());
           }
 
           task.setCandidateUsers(getValueAsList(PROPERTY_USERTASK_CANDIDATE_USERS, assignmentDefNode));
@@ -553,12 +557,12 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter implements Form
       elementNode.put(propertyName, extensionElementList.get(0).getElementText());
     }
   }
-  
+
   @Override
   public void setFormMap(Map<String, String> formMap) {
     this.formMap = formMap;
   }
-  
+
   @Override
   public void setFormKeyMap(Map<String, ModelInfo> formKeyMap) {
     this.formKeyMap = formKeyMap;
