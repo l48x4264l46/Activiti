@@ -51,6 +51,7 @@ public class TaskEntityImpl extends VariableScopeImpl implements TaskEntity, Ser
   protected int assigneeUpdatedCount; // needed for v5 compatibility
   protected String originalAssignee; // needed for v5 compatibility
   protected String assignee;
+  protected String assigneeType; // 流程角色类型
   protected DelegationState delegationState;
 
   protected String parentTaskId;
@@ -604,4 +605,12 @@ public class TaskEntityImpl extends VariableScopeImpl implements TaskEntity, Ser
     return "Task[id=" + id + ", name=" + name + "]";
   }
 
+  @Override
+  public String getAssigneeType() {
+    return assigneeType;
+  }
+
+  public void setAssigneeType(String assigneeType) {
+    this.assigneeType = assigneeType;
+  }
 }
