@@ -75,6 +75,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
     String activeTaskFormKey = null;
     String activeTaskSkipExpression = null;
     String activeTaskAssignee = null;
+    String activeTaskAssigneeType = null;
     String activeTaskOwner = null;
     List<String> activeTaskCandidateUsers = null;
     List<String> activeTaskCandidateGroups = null;
@@ -95,6 +96,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
       activeTaskOwner = getActiveValue(userTask.getOwner(), DynamicBpmnConstants.USER_TASK_OWNER, taskElementProperties);
       activeTaskCandidateUsers = getActiveValueList(userTask.getCandidateUsers(), DynamicBpmnConstants.USER_TASK_CANDIDATE_USERS, taskElementProperties);
       activeTaskCandidateGroups = getActiveValueList(userTask.getCandidateGroups(), DynamicBpmnConstants.USER_TASK_CANDIDATE_GROUPS, taskElementProperties);
+      activeTaskAssigneeType = getActiveValue(userTask.getAssigneeType(), DynamicBpmnConstants.USER_TASK_ASSIGNEE_TYPE, taskElementProperties);
 
     } else {
       activeTaskName = userTask.getName();
@@ -108,6 +110,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
       activeTaskOwner = userTask.getOwner();
       activeTaskCandidateUsers = userTask.getCandidateUsers();
       activeTaskCandidateGroups = userTask.getCandidateGroups();
+      activeTaskAssigneeType = userTask.getAssigneeType();
     }
 
     if (StringUtils.isNotEmpty(activeTaskName)) {
@@ -195,10 +198,9 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
     }
 
     // 角色类型，如果是按流程启动者，
-    if (AssigneeType.ROLE_INITIATOR.equals(task.getAssigneeType())) {
+    if (AssigneeType.ROLE_INITIATOR.equals(activeTaskAssigneeType)) {
       // 设置新的分配人
       activeTaskAssignee = task.getProcessInstance().getStartUserId();
-      task.setAssignee(activeTaskAssignee);
     }
 
     taskEntityManager.insert(task, (ExecutionEntity) execution);

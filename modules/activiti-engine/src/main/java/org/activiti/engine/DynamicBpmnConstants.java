@@ -32,6 +32,7 @@ public interface DynamicBpmnConstants {
   String USER_TASK_CATEGORY = "userTaskCategory";
   String USER_TASK_FORM_KEY = "userTaskFormKey";
   String USER_TASK_ASSIGNEE = "userTaskAssignee";
+  String USER_TASK_ASSIGNEE_TYPE = "userTaskAssigneeType";
   String USER_TASK_OWNER = "userTaskOwner";
   String USER_TASK_CANDIDATE_USERS = "userTaskCandidateUsers";
   String USER_TASK_CANDIDATE_GROUPS = "userTaskCandidateGroups";
