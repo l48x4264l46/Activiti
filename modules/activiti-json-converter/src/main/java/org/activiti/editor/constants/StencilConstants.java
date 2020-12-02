@@ -152,6 +152,7 @@ public interface StencilConstants {
   final String PROPERTY_USERTASK_PRIORITY = "prioritydefinition";
   final String PROPERTY_USERTASK_DUEDATE = "duedatedefinition";
   final String PROPERTY_USERTASK_ASSIGNEE = "assignee";
+  final String PROPERTY_USERTASK_ASSIGNEE_TYPE = "assigneeType";
   final String PROPERTY_USERTASK_OWNER = "owner";
   final String PROPERTY_USERTASK_CANDIDATE_USERS = "candidateUsers";
   final String PROPERTY_USERTASK_CANDIDATE_GROUPS = "candidateGroups";
