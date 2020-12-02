@@ -25,6 +25,7 @@ import java.util.Set;
 public class UserTask extends Task {
 
   protected String assignee;
+  protected String assigneeType;
   protected String owner;
   protected String priority;
   protected String formKey;
@@ -140,6 +141,14 @@ public class UserTask extends Task {
 
   public void setTaskListeners(List<ActivitiListener> taskListeners) {
     this.taskListeners = taskListeners;
+  }
+
+  public String getAssigneeType() {
+    return assigneeType;
+  }
+
+  public void setAssigneeType(String assigneeType) {
+    this.assigneeType = assigneeType;
   }
 
   public void addCustomUserIdentityLink(String userId, String type) {
