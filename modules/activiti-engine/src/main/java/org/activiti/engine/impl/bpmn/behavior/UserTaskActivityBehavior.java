@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.activiti.bpmn.constants.BpmnXMLConstants;
 import org.activiti.bpmn.model.ExtensionAttribute;
@@ -40,6 +41,7 @@ import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.el.ExpressionManager;
 import org.activiti.engine.impl.interceptor.CommandContext;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
+import org.activiti.engine.impl.persistence.entity.ExecutionEntityImpl;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntityManager;
 import org.activiti.engine.impl.util.CollectionUtil;
@@ -205,7 +207,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
         }
 
         // 如果没有获取到类型数据吗，则从属性中获取
-        if (StringUtils.isEmpty(activeTaskAssigneeType)) {
+        if (StringUtils.isEmpty(activeTaskAssigneeType) && attributes != null) {
             List<ExtensionAttribute> extensionAttributes = attributes.get(BpmnXMLConstants.ATTRIBUTE_TASK_USER_ASSIGNEE_TYPE);
             if (CollectionUtil.isNotEmpty(extensionAttributes)) {
                 for (ExtensionAttribute extensionAttribute : extensionAttributes) {
@@ -216,8 +218,10 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
         }
         // 角色类型，如果是按流程启动者，
         if (AssigneeType.ROLE_INITIATOR.equals(activeTaskAssigneeType)) {
-            // 设置新的分配人
-            activeTaskAssignee = task.getProcessInstance().getStartUserId();
+            ExecutionEntityImpl executionEntity = (ExecutionEntityImpl) execution;
+            if (executionEntity != null) {
+                activeTaskAssignee = executionEntity.getStartUserId();
+            }
         }
 
         taskEntityManager.insert(task, (ExecutionEntity) execution);
